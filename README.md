@@ -1,0 +1,30 @@
+# 🧠 MentalMath
+
+A mental math training game for practicing **addition, subtraction, multiplication, and division** — right in the browser, no install needed.
+
+## Features
+
+- **Configurable math topics** — toggle each operation on/off and choose its difficulty range independently:
+  - Addition: up to 10+10, 50+50, 100+100, or 1000+1000
+  - Subtraction: up to 20−10, 100−100, or 1000−1000 (answers are never negative)
+  - Multiplication: tables to 10×10 or 12×12, or up to 100×10 / 100×100
+  - Division: tables to 100÷10 or 144÷12, or up to 999÷9 (answers are always whole numbers)
+- **Visual or Listened mode** — see the problem on screen, or hear it spoken aloud (text-to-speech) to train working memory. Press `R` to repeat the audio.
+- **Session types** — 10/20/50 question sets or 60s/2-minute sprints.
+- **Score, streaks, and timing** — accuracy, best streak, and average seconds per question, plus a review of every missed problem at the end.
+- **Techniques tab** — mental math strategies with worked examples (left-to-right addition, round-and-compensate, counting up, ×5/×9/×11 tricks, doubling-halving, division by chunking, and more).
+- Settings persist between visits via `localStorage`.
+
+## Running it
+
+It's a static site — just open `index.html` in a browser, or serve the folder:
+
+```
+npx serve .
+```
+
+Listened mode uses the Web Speech API (built into Chrome, Edge, and Safari).
+
+## Stack
+
+Vanilla HTML / CSS / JavaScript. No dependencies, no build step.

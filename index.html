@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MentalMath — Mental Math Trainer</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">🧠 MentalMath</div>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="practice">Practice</button>
+      <button class="tab-btn" data-tab="techniques">Techniques</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===================== PRACTICE TAB ===================== -->
+    <section id="tab-practice" class="tab-panel active">
+
+      <!-- Setup screen -->
+      <div id="screen-setup" class="screen active">
+        <h1>Set up your session</h1>
+
+        <div class="card">
+          <h2>Math topics</h2>
+          <p class="hint">Toggle the operations you want to practice and pick a range for each.</p>
+
+          <div class="topic-row" data-op="add">
+            <label class="switch">
+              <input type="checkbox" id="op-add" checked>
+              <span class="slider"></span>
+            </label>
+            <span class="topic-name">Addition <span class="op-symbol">+</span></span>
+            <select id="range-add">
+              <option value="0">Up to 10 + 10</option>
+              <option value="1" selected>Up to 50 + 50</option>
+              <option value="2">Up to 100 + 100</option>
+              <option value="3">Up to 1000 + 1000</option>
+            </select>
+          </div>
+
+          <div class="topic-row" data-op="sub">
+            <label class="switch">
+              <input type="checkbox" id="op-sub" checked>
+              <span class="slider"></span>
+            </label>
+            <span class="topic-name">Subtraction <span class="op-symbol">−</span></span>
+            <select id="range-sub">
+              <option value="0">Up to 20 − 10</option>
+              <option value="1" selected>Up to 100 − 100</option>
+              <option value="2">Up to 1000 − 1000</option>
+            </select>
+          </div>
+
+          <div class="topic-row" data-op="mul">
+            <label class="switch">
+              <input type="checkbox" id="op-mul" checked>
+              <span class="slider"></span>
+            </label>
+            <span class="topic-name">Multiplication <span class="op-symbol">×</span></span>
+            <select id="range-mul">
+              <option value="0" selected>Tables up to 10 × 10</option>
+              <option value="1">Tables up to 12 × 12</option>
+              <option value="2">Up to 100 × 10</option>
+              <option value="3">Up to 100 × 100</option>
+            </select>
+          </div>
+
+          <div class="topic-row" data-op="div">
+            <label class="switch">
+              <input type="checkbox" id="op-div" checked>
+              <span class="slider"></span>
+            </label>
+            <span class="topic-name">Division <span class="op-symbol">÷</span></span>
+            <select id="range-div">
+              <option value="0" selected>Tables up to 100 ÷ 10</option>
+              <option value="1">Tables up to 144 ÷ 12</option>
+              <option value="2">Up to 999 ÷ 9</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Problem presentation</h2>
+          <div class="mode-toggle">
+            <button class="mode-btn active" data-mode="visual" id="mode-visual">
+              👁️ Visual<small>See the problem on screen</small>
+            </button>
+            <button class="mode-btn" data-mode="audio" id="mode-audio">
+              🔊 Listened<small>Hear the problem spoken aloud</small>
+            </button>
+          </div>
+          <p class="hint" id="audio-hint" hidden>In listened mode the problem is read aloud and hidden from the screen.
+            Press <kbd>R</kbd> or the repeat button to hear it again.</p>
+        </div>
+
+        <div class="card">
+          <h2>Session length</h2>
+          <div class="session-options">
+            <label><input type="radio" name="session" value="q10"> 10 questions</label>
+            <label><input type="radio" name="session" value="q20" checked> 20 questions</label>
+            <label><input type="radio" name="session" value="q50"> 50 questions</label>
+            <label><input type="radio" name="session" value="t60"> 60-second sprint</label>
+            <label><input type="radio" name="session" value="t120"> 2-minute sprint</label>
+          </div>
+        </div>
+
+        <button id="btn-start" class="primary big">Start practicing ▶</button>
+        <p id="setup-error" class="error" hidden>Enable at least one math topic to start.</p>
+      </div>
+
+      <!-- Quiz screen -->
+      <div id="screen-quiz" class="screen">
+        <div class="quiz-status">
+          <span id="quiz-progress">1 / 20</span>
+          <span id="quiz-timer" hidden>60s</span>
+          <span id="quiz-score">Score: 0</span>
+          <span id="quiz-streak">🔥 0</span>
+        </div>
+
+        <div id="problem-box" class="problem-box">
+          <div id="problem-text" class="problem-text">7 × 8</div>
+          <div id="audio-controls" class="audio-controls" hidden>
+            <div class="speaker-icon">🔊</div>
+            <button id="btn-repeat" class="secondary">Repeat (R)</button>
+          </div>
+        </div>
+
+        <form id="answer-form" autocomplete="off">
+          <input type="text" id="answer-input" inputmode="numeric" pattern="-?[0-9]*"
+                 placeholder="Your answer…" autofocus>
+          <button type="submit" class="primary">Check</button>
+        </form>
+
+        <div id="feedback" class="feedback"></div>
+
+        <div class="quiz-actions">
+          <button id="btn-skip" class="secondary">Skip →</button>
+          <button id="btn-quit" class="ghost">End session</button>
+        </div>
+      </div>
+
+      <!-- Results screen -->
+      <div id="screen-results" class="screen">
+        <h1>Session complete 🎉</h1>
+        <div class="card results-grid">
+          <div class="stat"><div class="stat-value" id="res-score">0</div><div class="stat-label">Correct</div></div>
+          <div class="stat"><div class="stat-value" id="res-accuracy">0%</div><div class="stat-label">Accuracy</div></div>
+          <div class="stat"><div class="stat-value" id="res-speed">0s</div><div class="stat-label">Avg. per question</div></div>
+          <div class="stat"><div class="stat-value" id="res-best-streak">0</div><div class="stat-label">Best streak</div></div>
+        </div>
+
+        <div class="card" id="missed-card" hidden>
+          <h2>Review your misses</h2>
+          <ul id="missed-list" class="missed-list"></ul>
+        </div>
+
+        <div class="results-actions">
+          <button id="btn-again" class="primary big">Practice again ▶</button>
+          <button id="btn-setup" class="secondary big">Change settings ⚙</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TECHNIQUES TAB ===================== -->
+    <section id="tab-techniques" class="tab-panel">
+      <h1>Mental math techniques</h1>
+      <p class="hint">Click a topic to expand it. Practice one technique at a time until it feels automatic.</p>
+
+      <details class="tech" open>
+        <summary>➕ Addition</summary>
+        <div class="tech-body">
+          <h3>1. Work left to right</h3>
+          <p>School teaches right-to-left, but mentally it's easier to add the big parts first.</p>
+          <p class="example">47 + 38 → 40 + 30 = 70, then 7 + 8 = 15 → <strong>85</strong></p>
+
+          <h3>2. Round and compensate</h3>
+          <p>Round one number to something easy, then correct at the end.</p>
+          <p class="example">47 + 38 → 47 + 40 = 87, took 2 extra, so 87 − 2 = <strong>85</strong></p>
+
+          <h3>3. Make a ten (bridging)</h3>
+          <p>Move part of one number to complete a round number.</p>
+          <p class="example">9 + 6 → take 1 from the 6 to make 10, then 10 + 5 = <strong>15</strong></p>
+          <p class="example">68 + 27 → take 2 from 27: 70 + 25 = <strong>95</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary>➖ Subtraction</summary>
+        <div class="tech-body">
+          <h3>1. Count up instead of down</h3>
+          <p>Subtraction is just the distance between two numbers — walk from the small one up to the big one.</p>
+          <p class="example">83 − 47 → from 47 to 50 is 3, from 50 to 83 is 33 → 3 + 33 = <strong>36</strong></p>
+
+          <h3>2. Round and compensate</h3>
+          <p>Subtract a round number, then give back the difference.</p>
+          <p class="example">83 − 47 → 83 − 50 = 33, subtracted 3 too many, so 33 + 3 = <strong>36</strong></p>
+
+          <h3>3. Work left to right</h3>
+          <p>When no borrowing is needed, subtract tens then ones.</p>
+          <p class="example">86 − 32 → 80 − 30 = 50, then 6 − 2 = 4 → <strong>54</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary>✖️ Multiplication</summary>
+        <div class="tech-body">
+          <h3>1. Break the number apart (distributive law)</h3>
+          <p>Split one factor into tens and ones, multiply each, add them up. This is the workhorse of mental multiplication.</p>
+          <p class="example">7 × 46 → 7 × 40 = 280, 7 × 6 = 42 → 280 + 42 = <strong>322</strong></p>
+
+          <h3>2. Multiply by 5: ×10 then halve</h3>
+          <p class="example">48 × 5 → 48 × 10 = 480 → 480 ÷ 2 = <strong>240</strong></p>
+
+          <h3>3. Multiply by 9: ×10 then subtract</h3>
+          <p class="example">9 × 37 → 370 − 37 = <strong>333</strong></p>
+
+          <h3>4. Multiply by 11 (two-digit numbers)</h3>
+          <p>Write the digits apart and put their sum in the middle (carry if needed).</p>
+          <p class="example">11 × 52 → 5 _ 2 with 5 + 2 = 7 in the middle → <strong>572</strong></p>
+          <p class="example">11 × 78 → 7 _ 8 with 15 in the middle → 7+1, 5, 8 → <strong>858</strong></p>
+
+          <h3>5. Double one, halve the other</h3>
+          <p>If one factor is even, you can trade until the problem becomes easy.</p>
+          <p class="example">16 × 25 → 8 × 50 = 400 → <strong>400</strong></p>
+
+          <h3>6. Squares ending in 5</h3>
+          <p>Multiply the leading digit(s) by one more than itself and stick "25" on the end.</p>
+          <p class="example">35² → 3 × 4 = 12 → <strong>1225</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary>➗ Division</summary>
+        <div class="tech-body">
+          <h3>1. Think of it as a multiplication question</h3>
+          <p>Division is just asking "what times the divisor gives the dividend?" Strong times tables make division automatic.</p>
+          <p class="example">84 ÷ 7 → 7 × ? = 84 → 7 × 12 = 84 → <strong>12</strong></p>
+
+          <h3>2. Divide by 4 or 8: halve repeatedly</h3>
+          <p class="example">96 ÷ 4 → half of 96 is 48, half again → <strong>24</strong></p>
+
+          <h3>3. Divide by 5: double, then ÷10</h3>
+          <p class="example">245 ÷ 5 → 245 × 2 = 490 → 490 ÷ 10 = <strong>49</strong></p>
+
+          <h3>4. Break the dividend apart</h3>
+          <p>Split the number into friendly chunks that the divisor goes into cleanly.</p>
+          <p class="example">96 ÷ 6 → (60 + 36) ÷ 6 → 10 + 6 = <strong>16</strong></p>
+          <p class="example">312 ÷ 4 → (280 + 32) ÷ 4 → 70 + 8 = <strong>78</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary>🎧 Tips for listened (voice) mode</summary>
+        <div class="tech-body">
+          <p>Solving problems you only <em>hear</em> trains working memory — the core skill of mental math.</p>
+          <ul>
+            <li><strong>Visualize the numbers</strong> as you hear them — picture them written on a whiteboard.</li>
+            <li><strong>Start computing immediately.</strong> Process "forty-seven plus…" before the second number even arrives.</li>
+            <li><strong>Repeat without shame.</strong> Press <kbd>R</kbd> as many times as you need; holding numbers in your head improves quickly.</li>
+            <li><strong>Say intermediate results to yourself</strong> ("seventy… eighty-five") to anchor them in memory.</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>MentalMath — practice a little every day. Built with vanilla HTML/CSS/JS.</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
