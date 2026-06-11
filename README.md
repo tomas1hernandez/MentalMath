@@ -1,6 +1,6 @@
 # 🧠 MentalMath
 
-A mental math training game for practicing **addition, subtraction, multiplication, and division** — right in the browser, no install needed.
+A mental math training game for practicing **addition, subtraction, multiplication, division, and percentages** — right in the browser, no install needed.
 
 ## Features
 
@@ -9,8 +9,9 @@ A mental math training game for practicing **addition, subtraction, multiplicati
   - Subtraction: up to 20−10, 100−100, or 1000−1000 (answers are never negative)
   - Multiplication: tables to 10×10 or 12×12, or up to 100×10 / 100×100
   - Division: tables to 100÷10 or 144÷12, or up to 999÷9 (answers are always whole numbers)
-- **Visual or Listened mode** — see the problem on screen, or hear it spoken aloud (text-to-speech) to train working memory. Press `R` to repeat the audio.
-- **Session types** — 10/20/50 question sets or 60s/2-minute sprints.
+  - Percentages: easy (10/25/50/75%), multiples of 5%, or any percent — answers are always whole numbers
+- **Visual or Listened mode** — see the problem on screen, or hear it spoken aloud (text-to-speech) to train working memory. Press `R` to repeat the audio. Speech is minimal: just "5 plus 9", no filler.
+- **Session types** — choose your own number of exercises (1–500) or your own time limit (10–3600 seconds).
 - **Score, streaks, and timing** — accuracy, best streak, and average seconds per question, plus a review of every missed problem at the end.
 - **Techniques tab** — mental math strategies with worked examples (left-to-right addition, round-and-compensate, counting up, ×5/×9/×11 tricks, doubling-halving, division by chunking, and more).
 - Settings persist between visits via `localStorage`.

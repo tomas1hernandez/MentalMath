@@ -80,6 +80,19 @@
               <option value="2">Up to 999 ÷ 9</option>
             </select>
           </div>
+
+          <div class="topic-row" data-op="pct">
+            <label class="switch">
+              <input type="checkbox" id="op-pct" checked>
+              <span class="slider"></span>
+            </label>
+            <span class="topic-name">Percentages <span class="op-symbol">%</span></span>
+            <select id="range-pct">
+              <option value="0" selected>Easy: 10%, 25%, 50%, 75%</option>
+              <option value="1">Multiples of 5% (5–95%)</option>
+              <option value="2">Any percent (1–99%)</option>
+            </select>
+          </div>
         </div>
 
         <div class="card">
@@ -98,12 +111,19 @@
 
         <div class="card">
           <h2>Session length</h2>
-          <div class="session-options">
-            <label><input type="radio" name="session" value="q10"> 10 questions</label>
-            <label><input type="radio" name="session" value="q20" checked> 20 questions</label>
-            <label><input type="radio" name="session" value="q50"> 50 questions</label>
-            <label><input type="radio" name="session" value="t60"> 60-second sprint</label>
-            <label><input type="radio" name="session" value="t120"> 2-minute sprint</label>
+          <p class="hint">Practice a fixed number of exercises, or race against the clock — you pick the amount.</p>
+          <div class="session-options session-custom">
+            <label>
+              <input type="radio" name="session-type" value="questions" checked>
+              Number of exercises:
+              <input type="number" id="session-questions" min="1" max="500" value="20">
+            </label>
+            <label>
+              <input type="radio" name="session-type" value="time">
+              Time limit:
+              <input type="number" id="session-seconds" min="10" max="3600" value="60">
+              seconds
+            </label>
           </div>
         </div>
 
@@ -249,6 +269,33 @@
           <p>Split the number into friendly chunks that the divisor goes into cleanly.</p>
           <p class="example">96 ÷ 6 → (60 + 36) ÷ 6 → 10 + 6 = <strong>16</strong></p>
           <p class="example">312 ÷ 4 → (280 + 32) ÷ 4 → 70 + 8 = <strong>78</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary>％ Percentages</summary>
+        <div class="tech-body">
+          <h3>1. Start from 10% — just move the decimal</h3>
+          <p>10% of any number is the number with the decimal moved one place left. Build everything else from it.</p>
+          <p class="example">10% of 340 = <strong>34</strong></p>
+          <p class="example">30% of 340 → 3 × 34 = <strong>102</strong></p>
+
+          <h3>2. 5% is half of 10%, 1% moves the decimal twice</h3>
+          <p class="example">5% of 480 → 10% is 48, half → <strong>24</strong></p>
+          <p class="example">1% of 700 = 7, so 3% of 700 = <strong>21</strong></p>
+
+          <h3>3. The swap trick: x% of y = y% of x</h3>
+          <p>Percentages commute — flip them when the other direction is easier.</p>
+          <p class="example">8% of 50 = 50% of 8 = <strong>4</strong></p>
+          <p class="example">4% of 75 = 75% of 4 = <strong>3</strong></p>
+
+          <h3>4. Know the fraction shortcuts</h3>
+          <p>25% = a quarter (halve twice), 50% = half, 75% = three quarters (quarter × 3), 20% = a fifth (÷5).</p>
+          <p class="example">75% of 84 → 84 ÷ 4 = 21 → 21 × 3 = <strong>63</strong></p>
+
+          <h3>5. Combine pieces</h3>
+          <p>Split an awkward percent into easy chunks: 10%s, 5%, and 1%s.</p>
+          <p class="example">23% of 400 → 20% is 80, 3% is 12 → <strong>92</strong></p>
         </div>
       </details>
 

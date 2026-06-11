@@ -33,15 +33,30 @@
       () => { const b = rand(2, 12), q = rand(2, 12); return [b * q, b]; },
       () => { const b = rand(2, 9), q = rand(11, 111); return [b * q, b]; },
     ],
+    // Percentages: [percent, base]. Base is a multiple of 100/gcd(p,100)
+    // so that p% of base is always a whole number.
+    pct: [
+      () => { const p = [10, 20, 25, 50, 75][rand(0, 4)]; return [p, pctBase(p, 12)]; },
+      () => { const p = 5 * rand(1, 19); return [p, pctBase(p, 10)]; },
+      () => { const p = rand(1, 99); return [p, pctBase(p, 8)]; },
+    ],
   };
 
   function orderDesc(x, y) { return x >= y ? [x, y] : [y, x]; }
 
+  function gcd(x, y) { return y === 0 ? x : gcd(y, x % y); }
+
+  function pctBase(p, maxMultiples) {
+    const step = 100 / gcd(p, 100);
+    return step * rand(1, maxMultiples);
+  }
+
   const OP_META = {
-    add: { symbol: "+", word: "plus",       calc: (a, b) => a + b },
-    sub: { symbol: "−", word: "minus",      calc: (a, b) => a - b },
-    mul: { symbol: "×", word: "times",      calc: (a, b) => a * b },
-    div: { symbol: "÷", word: "divided by", calc: (a, b) => a / b },
+    add: { calc: (a, b) => a + b,       fmt: (a, b) => `${a} + ${b}`,    say: (a, b) => `${a} plus ${b}` },
+    sub: { calc: (a, b) => a - b,       fmt: (a, b) => `${a} − ${b}`,    say: (a, b) => `${a} minus ${b}` },
+    mul: { calc: (a, b) => a * b,       fmt: (a, b) => `${a} × ${b}`,    say: (a, b) => `${a} times ${b}` },
+    div: { calc: (a, b) => a / b,       fmt: (a, b) => `${a} ÷ ${b}`,    say: (a, b) => `${a} divided by ${b}` },
+    pct: { calc: (a, b) => a * b / 100, fmt: (a, b) => `${a}% of ${b}`,  say: (a, b) => `${a} percent of ${b}` },
   };
 
   const OPS = Object.keys(OP_META);
@@ -90,9 +105,15 @@
     return {
       ops,
       mode: $("mode-audio").classList.contains("active") ? "audio" : "visual",
-      session: document.querySelector('input[name="session"]:checked').value,
+      session: {
+        type: document.querySelector('input[name="session-type"]:checked').value,
+        questions: clamp(Number($("session-questions").value) || 20, 1, 500),
+        seconds: clamp(Number($("session-seconds").value) || 60, 10, 3600),
+      },
     };
   }
+
+  function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
 
   function applySettingsToUI(s) {
     if (!s) return;
@@ -104,9 +125,11 @@
       }
     });
     if (s.mode) setMode(s.mode);
-    if (s.session) {
-      const radio = document.querySelector(`input[name="session"][value="${s.session}"]`);
+    if (s.session && typeof s.session === "object") {
+      const radio = document.querySelector(`input[name="session-type"][value="${s.session.type}"]`);
       if (radio) radio.checked = true;
+      if (s.session.questions) $("session-questions").value = s.session.questions;
+      if (s.session.seconds) $("session-seconds").value = s.session.seconds;
     }
   }
 
@@ -127,9 +150,11 @@
     $("op-" + op).addEventListener("change", () => { syncTopicRow(op); saveSettings(); });
     $("range-" + op).addEventListener("change", saveSettings);
   });
-  document.querySelectorAll('input[name="session"]').forEach((r) =>
+  document.querySelectorAll('input[name="session-type"]').forEach((r) =>
     r.addEventListener("change", saveSettings)
   );
+  $("session-questions").addEventListener("change", saveSettings);
+  $("session-seconds").addEventListener("change", saveSettings);
 
   // Mode toggle
   function setMode(mode) {
@@ -156,7 +181,8 @@
   }
 
   function speakProblem(q) {
-    speak(`What is ${q.a} ${OP_META[q.op].word} ${q.b}?`);
+    // Just the problem itself — "5 plus 9" — no filler words.
+    speak(OP_META[q.op].say(q.a, q.b));
   }
 
   // Some browsers load voices asynchronously; warm them up.
@@ -191,7 +217,7 @@
   }
 
   function questionText(q) {
-    return `${q.a} ${OP_META[q.op].symbol} ${q.b}`;
+    return OP_META[q.op].fmt(q.a, q.b);
   }
 
   function startGame() {
@@ -211,10 +237,10 @@
       totalQuestions: 0, timeLimit: 0, timeLeft: 0,
     });
 
-    if (settings.session.startsWith("q")) {
-      game.totalQuestions = Number(settings.session.slice(1));
+    if (settings.session.type === "questions") {
+      game.totalQuestions = settings.session.questions;
     } else {
-      game.timeLimit = Number(settings.session.slice(1));
+      game.timeLimit = settings.session.seconds;
       game.timeLeft = game.timeLimit;
     }
 
@@ -286,7 +312,7 @@
       game.missed.push({ text: questionText(q), answer: q.answer, given: raw });
       setFeedback(`✘ ${questionText(q)} = ${q.answer}`, "bad");
       if (game.settings.mode === "audio") {
-        speak(`Not quite. ${q.a} ${OP_META[q.op].word} ${q.b} is ${q.answer}.`);
+        speak(`${OP_META[q.op].say(q.a, q.b)} is ${q.answer}`);
       }
       advanceOrEnd(1800);
     }
