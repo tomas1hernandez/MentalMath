@@ -254,11 +254,14 @@
 
     showScreen("quiz");
 
+    $("quiz-bar").style.width = "0%";
+
     if (game.timeLimit) {
       $("quiz-timer").textContent = game.timeLeft + "s";
       game.timerHandle = setInterval(() => {
         game.timeLeft--;
         $("quiz-timer").textContent = game.timeLeft + "s";
+        $("quiz-bar").style.width = ((1 - game.timeLeft / game.timeLimit) * 100) + "%";
         if (game.timeLeft <= 0) endGame();
       }, 1000);
     }
@@ -275,6 +278,9 @@
     $("quiz-progress").textContent = game.totalQuestions
       ? `${game.asked} / ${game.totalQuestions}`
       : `Question ${game.asked}`;
+    if (game.totalQuestions) {
+      $("quiz-bar").style.width = (((game.asked - 1) / game.totalQuestions) * 100) + "%";
+    }
     $("quiz-score").textContent = "Score: " + game.correct;
     $("quiz-streak").textContent = "🔥 " + game.streak;
     $("problem-text").textContent = questionText(game.current);

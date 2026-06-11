@@ -4,11 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MentalMath — Mental Math Trainer</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="bg-glow" aria-hidden="true"></div>
+
   <header class="topbar">
-    <div class="brand">🧠 MentalMath</div>
+    <div class="brand"><span class="brand-icon">🧠</span> MentalMath</div>
     <nav class="tabs">
       <button class="tab-btn active" data-tab="practice">Practice</button>
       <button class="tab-btn" data-tab="techniques">Techniques</button>
@@ -21,124 +27,146 @@
 
       <!-- Setup screen -->
       <div id="screen-setup" class="screen active">
-        <h1>Set up your session</h1>
+        <div class="hero">
+          <h1>Train your <span class="grad-text">mental math</span></h1>
+          <p>Pick your topics, choose how you want the problems delivered, and go.</p>
+        </div>
 
         <div class="card">
-          <h2>Math topics</h2>
-          <p class="hint">Toggle the operations you want to practice and pick a range for each.</p>
+          <div class="card-head">
+            <h2>Math topics</h2>
+            <p class="hint">Switch topics on or off and pick a difficulty for each.</p>
+          </div>
 
           <div class="topic-row" data-op="add">
-            <label class="switch">
-              <input type="checkbox" id="op-add" checked>
-              <span class="slider"></span>
-            </label>
-            <span class="topic-name">Addition <span class="op-symbol">+</span></span>
-            <select id="range-add">
+            <span class="topic-icon icon-add">＋</span>
+            <span class="topic-name">Addition</span>
+            <select id="range-add" aria-label="Addition range">
               <option value="0">Up to 10 + 10</option>
               <option value="1" selected>Up to 50 + 50</option>
               <option value="2">Up to 100 + 100</option>
               <option value="3">Up to 1000 + 1000</option>
             </select>
+            <label class="switch">
+              <input type="checkbox" id="op-add" checked>
+              <span class="slider"></span>
+            </label>
           </div>
 
           <div class="topic-row" data-op="sub">
-            <label class="switch">
-              <input type="checkbox" id="op-sub" checked>
-              <span class="slider"></span>
-            </label>
-            <span class="topic-name">Subtraction <span class="op-symbol">−</span></span>
-            <select id="range-sub">
+            <span class="topic-icon icon-sub">−</span>
+            <span class="topic-name">Subtraction</span>
+            <select id="range-sub" aria-label="Subtraction range">
               <option value="0">Up to 20 − 10</option>
               <option value="1" selected>Up to 100 − 100</option>
               <option value="2">Up to 1000 − 1000</option>
             </select>
+            <label class="switch">
+              <input type="checkbox" id="op-sub" checked>
+              <span class="slider"></span>
+            </label>
           </div>
 
           <div class="topic-row" data-op="mul">
-            <label class="switch">
-              <input type="checkbox" id="op-mul" checked>
-              <span class="slider"></span>
-            </label>
-            <span class="topic-name">Multiplication <span class="op-symbol">×</span></span>
-            <select id="range-mul">
+            <span class="topic-icon icon-mul">×</span>
+            <span class="topic-name">Multiplication</span>
+            <select id="range-mul" aria-label="Multiplication range">
               <option value="0" selected>Tables up to 10 × 10</option>
               <option value="1">Tables up to 12 × 12</option>
               <option value="2">Up to 100 × 10</option>
               <option value="3">Up to 100 × 100</option>
             </select>
+            <label class="switch">
+              <input type="checkbox" id="op-mul" checked>
+              <span class="slider"></span>
+            </label>
           </div>
 
           <div class="topic-row" data-op="div">
-            <label class="switch">
-              <input type="checkbox" id="op-div" checked>
-              <span class="slider"></span>
-            </label>
-            <span class="topic-name">Division <span class="op-symbol">÷</span></span>
-            <select id="range-div">
+            <span class="topic-icon icon-div">÷</span>
+            <span class="topic-name">Division</span>
+            <select id="range-div" aria-label="Division range">
               <option value="0" selected>Tables up to 100 ÷ 10</option>
               <option value="1">Tables up to 144 ÷ 12</option>
               <option value="2">Up to 999 ÷ 9</option>
             </select>
+            <label class="switch">
+              <input type="checkbox" id="op-div" checked>
+              <span class="slider"></span>
+            </label>
           </div>
 
           <div class="topic-row" data-op="pct">
-            <label class="switch">
-              <input type="checkbox" id="op-pct" checked>
-              <span class="slider"></span>
-            </label>
-            <span class="topic-name">Percentages <span class="op-symbol">%</span></span>
-            <select id="range-pct">
+            <span class="topic-icon icon-pct">%</span>
+            <span class="topic-name">Percentages</span>
+            <select id="range-pct" aria-label="Percentages range">
               <option value="0" selected>Easy: 10%, 25%, 50%, 75%</option>
               <option value="1">Multiples of 5% (5–95%)</option>
               <option value="2">Any percent (1–99%)</option>
             </select>
+            <label class="switch">
+              <input type="checkbox" id="op-pct" checked>
+              <span class="slider"></span>
+            </label>
           </div>
         </div>
 
         <div class="card">
-          <h2>Problem presentation</h2>
+          <div class="card-head">
+            <h2>Problem presentation</h2>
+          </div>
           <div class="mode-toggle">
             <button class="mode-btn active" data-mode="visual" id="mode-visual">
-              👁️ Visual<small>See the problem on screen</small>
+              <span class="mode-icon">👁️</span>
+              <span class="mode-label">Visual</span>
+              <small>See the problem on screen</small>
             </button>
             <button class="mode-btn" data-mode="audio" id="mode-audio">
-              🔊 Listened<small>Hear the problem spoken aloud</small>
+              <span class="mode-icon">🔊</span>
+              <span class="mode-label">Listened</span>
+              <small>Hear the problem spoken aloud</small>
             </button>
           </div>
-          <p class="hint" id="audio-hint" hidden>In listened mode the problem is read aloud and hidden from the screen.
+          <p class="hint" id="audio-hint" hidden>The problem is read aloud and hidden from the screen.
             Press <kbd>R</kbd> or the repeat button to hear it again.</p>
         </div>
 
         <div class="card">
-          <h2>Session length</h2>
-          <p class="hint">Practice a fixed number of exercises, or race against the clock — you pick the amount.</p>
-          <div class="session-options session-custom">
-            <label>
+          <div class="card-head">
+            <h2>Session length</h2>
+          </div>
+          <div class="session-options">
+            <label class="session-choice">
               <input type="radio" name="session-type" value="questions" checked>
-              Number of exercises:
-              <input type="number" id="session-questions" min="1" max="500" value="20">
+              <span class="session-box">
+                <span class="session-title">🎯 Exercises</span>
+                <span class="session-field"><input type="number" id="session-questions" min="1" max="500" value="20"> questions</span>
+              </span>
             </label>
-            <label>
+            <label class="session-choice">
               <input type="radio" name="session-type" value="time">
-              Time limit:
-              <input type="number" id="session-seconds" min="10" max="3600" value="60">
-              seconds
+              <span class="session-box">
+                <span class="session-title">⏱️ Timed sprint</span>
+                <span class="session-field"><input type="number" id="session-seconds" min="10" max="3600" value="60"> seconds</span>
+              </span>
             </label>
           </div>
         </div>
 
-        <button id="btn-start" class="primary big">Start practicing ▶</button>
+        <button id="btn-start" class="primary big">Start practicing</button>
         <p id="setup-error" class="error" hidden>Enable at least one math topic to start.</p>
       </div>
 
       <!-- Quiz screen -->
       <div id="screen-quiz" class="screen">
         <div class="quiz-status">
-          <span id="quiz-progress">1 / 20</span>
-          <span id="quiz-timer" hidden>60s</span>
-          <span id="quiz-score">Score: 0</span>
-          <span id="quiz-streak">🔥 0</span>
+          <span class="chip" id="quiz-progress">1 / 20</span>
+          <span class="chip chip-amber" id="quiz-timer" hidden>60s</span>
+          <span class="chip chip-green" id="quiz-score">Score: 0</span>
+          <span class="chip chip-fire" id="quiz-streak">🔥 0</span>
         </div>
+
+        <div class="progress-track"><div id="quiz-bar" class="progress-fill"></div></div>
 
         <div id="problem-box" class="problem-box">
           <div id="problem-text" class="problem-text">7 × 8</div>
@@ -164,33 +192,37 @@
 
       <!-- Results screen -->
       <div id="screen-results" class="screen">
-        <h1>Session complete 🎉</h1>
-        <div class="card results-grid">
-          <div class="stat"><div class="stat-value" id="res-score">0</div><div class="stat-label">Correct</div></div>
-          <div class="stat"><div class="stat-value" id="res-accuracy">0%</div><div class="stat-label">Accuracy</div></div>
-          <div class="stat"><div class="stat-value" id="res-speed">0s</div><div class="stat-label">Avg. per question</div></div>
-          <div class="stat"><div class="stat-value" id="res-best-streak">0</div><div class="stat-label">Best streak</div></div>
+        <div class="hero">
+          <h1>Session <span class="grad-text">complete</span> 🎉</h1>
+        </div>
+        <div class="results-grid">
+          <div class="stat card"><div class="stat-value" id="res-score">0</div><div class="stat-label">Correct</div></div>
+          <div class="stat card"><div class="stat-value" id="res-accuracy">0%</div><div class="stat-label">Accuracy</div></div>
+          <div class="stat card"><div class="stat-value" id="res-speed">0s</div><div class="stat-label">Avg. per question</div></div>
+          <div class="stat card"><div class="stat-value" id="res-best-streak">0</div><div class="stat-label">Best streak</div></div>
         </div>
 
         <div class="card" id="missed-card" hidden>
-          <h2>Review your misses</h2>
+          <div class="card-head"><h2>Review your misses</h2></div>
           <ul id="missed-list" class="missed-list"></ul>
         </div>
 
         <div class="results-actions">
-          <button id="btn-again" class="primary big">Practice again ▶</button>
-          <button id="btn-setup" class="secondary big">Change settings ⚙</button>
+          <button id="btn-again" class="primary big">Practice again</button>
+          <button id="btn-setup" class="secondary big">Change settings</button>
         </div>
       </div>
     </section>
 
     <!-- ===================== TECHNIQUES TAB ===================== -->
     <section id="tab-techniques" class="tab-panel">
-      <h1>Mental math techniques</h1>
-      <p class="hint">Click a topic to expand it. Practice one technique at a time until it feels automatic.</p>
+      <div class="hero">
+        <h1>Mental math <span class="grad-text">techniques</span></h1>
+        <p>Click a topic to expand it. Practice one technique at a time until it feels automatic.</p>
+      </div>
 
       <details class="tech" open>
-        <summary>➕ Addition</summary>
+        <summary><span class="topic-icon icon-add">＋</span> Addition</summary>
         <div class="tech-body">
           <h3>1. Work left to right</h3>
           <p>School teaches right-to-left, but mentally it's easier to add the big parts first.</p>
@@ -208,7 +240,7 @@
       </details>
 
       <details class="tech">
-        <summary>➖ Subtraction</summary>
+        <summary><span class="topic-icon icon-sub">−</span> Subtraction</summary>
         <div class="tech-body">
           <h3>1. Count up instead of down</h3>
           <p>Subtraction is just the distance between two numbers — walk from the small one up to the big one.</p>
@@ -225,7 +257,7 @@
       </details>
 
       <details class="tech">
-        <summary>✖️ Multiplication</summary>
+        <summary><span class="topic-icon icon-mul">×</span> Multiplication</summary>
         <div class="tech-body">
           <h3>1. Break the number apart (distributive law)</h3>
           <p>Split one factor into tens and ones, multiply each, add them up. This is the workhorse of mental multiplication.</p>
@@ -253,7 +285,7 @@
       </details>
 
       <details class="tech">
-        <summary>➗ Division</summary>
+        <summary><span class="topic-icon icon-div">÷</span> Division</summary>
         <div class="tech-body">
           <h3>1. Think of it as a multiplication question</h3>
           <p>Division is just asking "what times the divisor gives the dividend?" Strong times tables make division automatic.</p>
@@ -273,7 +305,7 @@
       </details>
 
       <details class="tech">
-        <summary>％ Percentages</summary>
+        <summary><span class="topic-icon icon-pct">%</span> Percentages</summary>
         <div class="tech-body">
           <h3>1. Start from 10% — just move the decimal</h3>
           <p>10% of any number is the number with the decimal moved one place left. Build everything else from it.</p>
@@ -300,7 +332,7 @@
       </details>
 
       <details class="tech">
-        <summary>🎧 Tips for listened (voice) mode</summary>
+        <summary><span class="topic-icon icon-ear">🎧</span> Tips for listened (voice) mode</summary>
         <div class="tech-body">
           <p>Solving problems you only <em>hear</em> trains working memory — the core skill of mental math.</p>
           <ul>
@@ -315,7 +347,7 @@
   </main>
 
   <footer>
-    <p>MentalMath — practice a little every day. Built with vanilla HTML/CSS/JS.</p>
+    <p>MentalMath — practice a little every day.</p>
   </footer>
 
   <script src="js/app.js"></script>
