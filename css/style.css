@@ -235,6 +235,7 @@ button { font-family: inherit; }
 .icon-div { background: rgba(251, 191, 36, 0.14); color: var(--amber); }
 .icon-pct { background: rgba(34, 211, 238, 0.14); color: var(--cyan); }
 .icon-ear { background: rgba(99, 102, 241, 0.14); }
+.icon-life { background: rgba(251, 191, 36, 0.14); }
 
 .topic-name { flex: 1; font-weight: 600; font-size: 0.98rem; }
 
@@ -403,6 +404,16 @@ button { font-family: inherit; }
   letter-spacing: 1px;
   font-variant-numeric: tabular-nums;
   text-shadow: 0 0 30px rgba(99, 102, 241, 0.35);
+}
+
+/* Real-life word problems: long sentences need prose sizing, not giant digits. */
+.problem-text.word {
+  font-size: clamp(1.15rem, 4.5vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.55;
+  max-width: 34rem;
+  text-shadow: none;
 }
 
 .audio-controls { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; position: relative; }

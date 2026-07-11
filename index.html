@@ -109,6 +109,20 @@
               <span class="slider"></span>
             </label>
           </div>
+
+          <div class="topic-row" data-op="life">
+            <span class="topic-icon icon-life">💰</span>
+            <span class="topic-name">Real life</span>
+            <select id="range-life" aria-label="Real life range">
+              <option value="0" selected>Everyday cash: change &amp; prices</option>
+              <option value="1">Big cash: bills, tips &amp; rent</option>
+              <option value="2">Business: stocks &amp; revenue</option>
+            </select>
+            <label class="switch">
+              <input type="checkbox" id="op-life" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
 
         <div class="card">
@@ -177,7 +191,7 @@
         </div>
 
         <form id="answer-form" autocomplete="off">
-          <input type="text" id="answer-input" inputmode="numeric" pattern="-?[0-9]*"
+          <input type="text" id="answer-input" inputmode="numeric" pattern="-?[0-9,]*"
                  placeholder="Your answer…" autofocus>
           <button type="submit" class="primary">Check</button>
         </form>
@@ -328,6 +342,33 @@
           <h3>5. Combine pieces</h3>
           <p>Split an awkward percent into easy chunks: 10%s, 5%, and 1%s.</p>
           <p class="example">23% of 400 → 20% is 80, 3% is 12 → <strong>92</strong></p>
+        </div>
+      </details>
+
+      <details class="tech">
+        <summary><span class="topic-icon icon-life">💰</span> Real-life money math</summary>
+        <div class="tech-body">
+          <h3>1. Counting bills: strip the zeros</h3>
+          <p>"How many $500 bills make $47,000?" is just 47,000 ÷ 500. Divide both sides by 100 first — 470 ÷ 5 — then use the ÷5 trick: double and divide by ten.</p>
+          <p class="example">47,000 ÷ 500 → 470 ÷ 5 → 940 ÷ 10 = <strong>94 bills</strong></p>
+          <p class="example">$1000 bills are even easier: just drop three zeros. 38,000 → <strong>38 bills</strong></p>
+
+          <h3>2. Making change: count up, don't subtract</h3>
+          <p>Cashiers don't subtract — they count up from the total to the bill.</p>
+          <p class="example">Pay $137 with a $200 bill → 137 + 3 = 140, + 60 = 200 → change is <strong>$63</strong></p>
+
+          <h3>3. Unit prices: recognize the friendly divisors</h3>
+          <p>A dozen is 12, a six-pack is 6. Halve twice for 12 (then ÷3), or halve once for 6 (then ÷3).</p>
+          <p class="example">Dozen eggs at $84 → 84 ÷ 12 → 84 ÷ 2 ÷ 2 = 21, ÷ 3 = <strong>$7 each</strong></p>
+
+          <h3>4. Market cap = price × shares</h3>
+          <p>Keep the units separate: multiply the small numbers, carry the "millions" along for free.</p>
+          <p class="example">$100 per share × 1 million shares = <strong>$100 million</strong></p>
+          <p class="example">$25 × 20 million shares → 25 × 2 = 50, ×10 → <strong>$500 million</strong></p>
+
+          <h3>5. Percent tips from 10%</h3>
+          <p>10% is the decimal shifted once. 15% = 10% + half of that. 20% = 10% doubled.</p>
+          <p class="example">15% tip on $450 → 45 + 22.5 ≈ 45 + 23 = <strong>~$68</strong></p>
         </div>
       </details>
 

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "mentalmath",
+  "compatibility_date": "2026-07-11",
+  "assets": {
+    "directory": "."
+  },
+  "routes": [{ "pattern": "math.tomaslife.com", "custom_domain": true }]
+}
